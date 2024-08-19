@@ -12,11 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: 'main']], 
-                          userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']],
-                          gitTool: 'Git for Docker'
-                ])
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], gitTool: 'Git in Docker', userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']])
             }
         }
 
