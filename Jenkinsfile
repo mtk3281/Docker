@@ -9,12 +9,6 @@ pipeline {
     environment {
         FLASK_APP = 'app.py'
     }
-    stage('Test Git') {
-        steps {
-            sh 'which git'
-            sh 'git --version'
-        }
-    }
 
     stages {
         stage('Verify Git Installation') {
