@@ -7,12 +7,16 @@ pipeline {
         FLASK_APP = 'app.py'
     }
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                    echo 'Git Checkout'
-                      git url: 'https://github.com/mtk3281/flask-web-app--jenkins.git', branch: 'main'
-                  }
+                echo 'Starting Git clone...'
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtk3281/flask-web-app--jenkins'
+            }
         }
 
         stage('Install Dependencies') {
@@ -48,8 +52,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the Flask app...'
-                // Add deployment commands here
-                // e.g., copy files, deploy to a server, etc.
+                // Add your deployment steps here
             }
         }
     }
@@ -57,7 +60,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up workspace...'
-            deleteDir() // Clean up the workspace after the build
+            deleteDir()
         }
 
         success {
