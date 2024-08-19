@@ -1,52 +1,54 @@
-node('docker_agent_python') {
+pipeline {
+    agent {
+        label 'docker_agent_python'
+    }
 
     environment {
         FLASK_APP = 'app.py'
     }
 
-    try {
-        stage('Checkout') {
-            echo 'git cloning started'
-            checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']]])
-    triggers {
-        pollSCM('* * * * *')
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                echo 'Starting Git clone...'
-               git url: 'https://github.com/mtk3281/flask-web-app--jenkins.git', branch: 'main'
+                echo 'git cloning started '
+               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtk3281/flask-web-app--jenkins'
+                
             }
         }
 
         stage('Install Dependencies') {
-            echo 'Installing dependencies...'
-            sh 'pip install -r requirements.txt'
+            steps {
+                echo 'Installing dependencies...'
+                sh 'pip install -r requirements.txt'
+            }
         }
 
         stage('Run Flask App') {
-            echo 'Starting the Flask app...'
-            sh "nohup python ${FLASK_APP} > app.log 2>&1 &"
-            sleep 10
+            steps {
+                echo 'Starting the Flask app...'
+                sh 'nohup python $FLASK_APP > app.log 2>&1 &'
+                sleep time: 10, unit: 'SECONDS'
+            }
         }
 
         stage('Test Flask App') {
-            echo 'Running tests...'
-            sh 'curl -s http://localhost:5000 || exit 1'
-            sh 'python -m unittest discover -s tests'
+            steps {
+                echo 'Running tests...'
+                sh 'curl -s http://localhost:5000 || exit 1'
+                sh 'python -m unittest discover -s tests'
+            }
         }
 
         stage('Clean Up') {
-            echo 'Stopping the Flask app...'
-            sh "pkill -f 'python ${FLASK_APP}' || true"
+            steps {
+                echo 'Stopping the Flask app...'
+                sh 'pkill -f "python $FLASK_APP" || true'
+            }
         }
 
         stage('Deploy') {
-            echo 'Deploying the Flask app...'
             steps {
                 echo 'Deploying the Flask app...'
-                // Add your deployment steps here
             }
         }
     }
@@ -54,19 +56,14 @@ node('docker_agent_python') {
     post {
         always {
             echo 'Cleaning up workspace...'
-            deleteDir()
+            deleteDir() 
         }
 
-    } catch (Exception e) {
-        echo "Build failed: ${e.getMessage()}"
-        currentBuild.result = 'FAILURE'
-        throw e
-    } finally {
-        echo 'Cleaning up workspace...'
-        deleteDir()
-        if (currentBuild.result == 'SUCCESS') {
+        success {
             echo 'Build succeeded!'
-        } else {
+        }
+
+        failure {
             echo 'Build failed!'
         }
     }
