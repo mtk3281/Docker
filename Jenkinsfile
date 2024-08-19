@@ -8,6 +8,16 @@ node('docker_agent_python') {
         stage('Checkout') {
             echo 'git cloning started'
             checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']]])
+    triggers {
+        pollSCM('* * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Starting Git clone...'
+               git url: 'https://github.com/mtk3281/flask-web-app--jenkins.git', branch: 'main'
+            }
         }
 
         stage('Install Dependencies') {
@@ -34,6 +44,17 @@ node('docker_agent_python') {
 
         stage('Deploy') {
             echo 'Deploying the Flask app...'
+            steps {
+                echo 'Deploying the Flask app...'
+                // Add your deployment steps here
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up workspace...'
+            deleteDir()
         }
 
     } catch (Exception e) {

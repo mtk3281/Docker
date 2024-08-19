@@ -4,6 +4,7 @@ USER root
 
 # Install Python 3, virtualenv, and Git
 RUN apk add --no-cache python3 py3-pip python3-dev git \
+RUN apk add --no-cache python3 py3-pip python3-dev \
     && python3 -m venv /venv \
     && . /venv/bin/activate \
     && pip install --upgrade pip \
