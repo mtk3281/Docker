@@ -34,7 +34,7 @@
   - [Prerequisites](#prerequisites)
   - [Docker Image](#docker-image)
   - [Jenkins Pipeline structure](#jenkins-pipeline-structure)
-- [Installation](#installation)
+- [Running the Pipeline](#running-the-pipelines)
 - [Project Roadmap](#project-roadmap)
 
 ---
@@ -142,107 +142,74 @@ This project is a Flask-based web application that provides a comprehensive intr
   ```
 
 
-  ### Dockerfile code
-
-  The Dockerfile for creating the Docker image is as follows:
-
-  ```dockerfile
-  FROM jenkins/agent:alpine-jdk11
-
-  USER root
-
-  # Install Python 3 and virtualenv
-  RUN apk add --no-cache python3 py3-pip python3-dev \
-      && python3 -m venv /venv \
-      && . /venv/bin/activate \
-      && pip install --upgrade pip \
-      && pip install Flask
-
-  # Set environment variables to use the virtual environment
-  ENV PATH="/venv/bin:$PATH"
-
-  USER jenkins
-  ```
-
   ### Jenkins Pipeline structure
 
   The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testing, and deploying the Flask application. Below is the pipeline basic structure :
 
-  ``` groovy
+``` groovy
 pipeline {
-    agent any
- 
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Building"'
-                // Add commands to build your project here
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'echo "Testing"'
-                // Add commands to run tests here
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'echo "Deploying"'
-                // Add commands to deploy your application here
-            }
-        }
-    }
- 
-    post {
-        always {
-            // Cleanup steps if needed
-        }
-        success {
-            // Actions to perform when the pipeline succeeds
-        }
-        failure {
-            // Actions to perform when the pipeline fails
-        }
-    }
+  agent any
+
+  stages {
+      stage('Build') {
+          steps {
+              sh 'echo "Building"'
+              // Add commands to build your project here
+          }
+      }
+      stage('Test') {
+          steps {
+              sh 'echo "Testing"'
+              // Add commands to run tests here
+          }
+      }
+      stage('Deploy') {
+          steps {
+              sh 'echo "Deploying"'
+              // Add commands to deploy your application here
+          }
+      }
+  }
+
+  post {
+      always {
+          // Cleanup steps if needed
+      }
+      success {
+          // Actions to perform when the pipeline succeeds
+      }
+      failure {
+          // Actions to perform when the pipeline fails
+      }
+  }
 }
 
-  ```
+```
 
-## Installation
+## Running the Pipelines
 
 - **Set up Jenkins**:
+
+  - Create a new pipeline job in Jenkins.
+  - Point Jenkins to your repository where Jenskins file is located
   
-- **Create a New Job in Jenkins**:
+- **Run the Pipeline**:
+
+  - once the jenkins in configured, you can trigger it manually or set it up to run automatically on each push to the repository.
   
-- **Choose "Pipeline" for the job type**:
+- **Monitor the Pipeline**:
 
-- **Configure the Job**:
+  - Watch the stages execute in Jenkins and check the console output for each stage to ensure everything runs as expected.
+
+- **Deployment**:
+
+  - Customize the Deploy `stage in the Jenkins file `to add your deployment steps.
   
-  a. **Set the GitHub Repository**:
-    
-    ```
-    https://github.com/mtk3281/flask-web-app--jenkins/
-    ```
-
-  b. **Set Poll SCM**:
-
-    Define the polling schedule for changes:
-    
-    - Example: `* * * * *` (for every minute)
-    - Example: `*/3 * * * *` (for every 3 minutes)
-
-  c. **Define Project Pipeline Structure**:
-
-    Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
-
-    - **Automatic Builds**:
-
-      When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
 
 ### Project Roadmap
 
-  * Build the Basic Flask Web App Structure
-  * Implement Jenkins Tutorials and Explanations
-  * Containerize the Application Using Docker
-  * Expand Content to Cover Advanced Jenkins Topics
-  * Add More Detailed Testing and CI/CD Examples
+  - Build the Basic Flask Web App Structure
+  - Implement Jenkins Tutorials and Explanations
+  - Containerize the Application Using Docker
+  - Expand Content to Cover Advanced Jenkins Topics
+  - Add More Detailed Testing and CI/CD Examples
