@@ -2,9 +2,6 @@ pipeline {
     agent {
         label 'docker_python_flask'
     }
-    tools {
-        git 'Docker' 
-    }
 
     environment {
         FLASK_APP = 'app.py'
