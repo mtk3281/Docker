@@ -243,41 +243,41 @@ The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testi
 
 ```
 
-### Installation
+## Installation
 
-  - **Set up Jenkins**:
+- **Set up Jenkins**:
+  
+- **Create a New Job in Jenkins**:
+  
+- **Choose "Pipeline" for the job type**:
 
-  - **Create a New Job in Jenkins**:
+- **Configure the Job**:
+  
+  a. **Set the GitHub Repository**:
+    
+    ```
+    https://github.com/mtk3281/flask-web-app--jenkins/
+    ```
 
-  - **Choose "Pipeline" for the job type**:
+  b. **Set Poll SCM**:
 
-  - **Configure the Job**::
-      
-    a. Set the GitHub Repository:
+    Define the polling schedule for changes:
+    
+    - Example: `* * * * *` (for every minute)
+    - Example: `*/3 * * * *` (for every 3 minutes)
 
-        https://github.com/mtk3281/flask-web-app--jenkins/
+  c. **Define Project Pipeline Structure**:
 
+    Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
 
-    b. Set Poll SCM:
+    - **Automatic Builds**:
 
-        Define the polling schedule for changes:
-
-        Example: * * * * * (for every minute)
-        Example: */3 * * * * (for every 3 minutes)
-
-
-    c. Define Project Pipeline Structure:
-
-        Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
-        Automatic Builds:
-
-        When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
-
+      When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
 
 ### Project Roadmap
 
-* Build the Basic Flask Web App Structure
-* Implement Jenkins Tutorials and Explanations
-* Containerize the Application Using Docker
-* Expand Content to Cover Advanced Jenkins Topics
-* Add More Detailed Testing and CI/CD Examples
+  * Build the Basic Flask Web App Structure
+  * Implement Jenkins Tutorials and Explanations
+  * Containerize the Application Using Docker
+  * Expand Content to Cover Advanced Jenkins Topics
+  * Add More Detailed Testing and CI/CD Examples
