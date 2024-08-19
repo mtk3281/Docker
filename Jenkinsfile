@@ -10,9 +10,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'git cloning started '
-               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtk3281/flask-web-app--jenkins'
-                
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: 'main']], 
+                          userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']]
+                ])
             }
         }
 
