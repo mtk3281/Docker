@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenkins Pipeline Working</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="side-nav">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('jenkins_working') }}">How Does It Work?</a></li>
+                <li><a href="{{ url_for('jenkins_uses') }}">Uses of Jenkins</a></li>
+                <li><a href="{{ url_for('jenkins_architecture') }}">Jenkins Architecture</a></li>
+                <li><a href="{{ url_for('jenkins_pipeline') }}">Pipeline Working</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <div class="breadcrumbs">
+                <a href="{{ url_for('home') }}">Home</a> &gt; <a href="{{ url_for('jenkins_pipeline') }}">Pipeline Working</a>
+            </div>
+            <div class="container">
+                <div class="section-container">
+                    <h1>Jenkins Pipeline Working</h1>
+                    <p>Jenkins Pipelines are a fundamental feature that automates the process of building, testing, and deploying applications. They provide a way to define and execute continuous integration and delivery workflows using a domain-specific language (DSL) called Pipeline DSL. Here's an overview of how Jenkins Pipelines work:</p>
+                    <img src="{{ url_for('static', filename='images/pipeline.jpg') }}" alt="Jenkins Architecture" class="architecture-img">
+                    
+                    <div class="process-steps">
+                        <div class="step">
+                            <h3>1. Define Pipeline</h3>
+                            <p>Define the pipeline using a Jenkinsfile, which is a text file containing the Pipeline DSL. This file is typically stored in the root of the project repository. The Jenkinsfile outlines the stages and steps of the pipeline.</p>
+                            <img src="{{ url_for('static', filename='images/scripted_pipeline.png') }}" alt="Jenkinsfile" class="architecture-img">
+                        </div>
+                        <div class="step">
+                            <h3>2. Pipeline Stages</h3>
+                            <p>The pipeline is divided into stages, each representing a phase of the CI/CD process. Common stages include 'Build', 'Test', 'Deploy', etc. Each stage contains steps that execute specific tasks.</p>
+                            <img src="{{ url_for('static', filename='images/pipeline_stages.jpg') }}" alt="Pipeline Stages" class="architecture-img">
+                        </div>
+                        <div class="step">
+                            <h3>3. Execute Pipeline</h3>
+                            <p>When a pipeline is triggered, Jenkins reads the Jenkinsfile, processes the defined stages and steps, and executes them in order. The pipeline runs on Jenkins agents that execute the tasks specified in each step.</p>
+                            <img src="{{ url_for('static', filename='images/pipeline-run.png') }}" alt="Execute Pipeline" class="architecture-img">
+                        </div>
+                        <div class="step">
+                            <h3>4. Monitor and Feedback</h3>
+                            <p>Jenkins provides real-time feedback on the pipeline execution, including logs and status updates. Users can monitor the progress through the Jenkins web interface and receive notifications in case of failures or successful completions.</p>
+                            <img src="{{ url_for('static', filename='images/monitoring.png') }}" alt="Monitor and Feedback" class="architecture-img">
+                        </div>
+                    </div>
+                    
+                    <div class="section-container">
+                        <h2>Pipeline Types</h2>
+                        <p>Jenkins supports different types of pipelines, including:</p>
+                        <div class="basic-concepts">
+                            <div class="concept">
+                                <h3>Declarative Pipeline</h3>
+                                <p>Declarative Pipelines provide a simpler syntax and are defined using the `pipeline` block. They are more user-friendly and suitable for most use cases.</p>
+                            </div>
+                            <div class="concept">
+                                <h3>Scripted Pipeline</h3>
+                                <p>Scripted Pipelines offer greater flexibility and are defined using Groovy scripts. They are more complex but allow for advanced configurations and customizations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-container">
+                        <h2>Benefits of Jenkins Pipelines</h2>
+                        <ul class="jenkins-basics">
+                            <li>Automates repetitive tasks, reducing manual intervention.</li>
+                            <li>Ensures consistent builds and deployments through predefined workflows.</li>
+                            <li>Provides visibility and feedback on the CI/CD process.</li>
+                            <li>Allows for complex workflows and custom integrations with other tools.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

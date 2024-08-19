@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Uses of Jenkins{% endblock %}
+
+{% block breadcrumbs %}
+    <a href="{{ url_for('home') }}">Home</a> &gt; 
+    <a href="{{ url_for('jenkins_uses') }}">Uses of Jenkins</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Uses of Jenkins</h1>
+        <p>
+            Jenkins is a powerful tool used across the software development lifecycle. It offers various features that make it indispensable for continuous integration and continuous delivery (CI/CD). Below are some of the primary uses of Jenkins:
+        </p>
+
+        <div class="uses-list">
+            <div class="use-item">
+                <h2>1. Continuous Integration (CI)</h2>
+                <p>
+                    Jenkins automates the process of integrating code changes from multiple contributors into a shared repository frequently. It performs automated builds and tests to detect integration issues early, leading to higher software quality.
+                </p>
+                <img src="{{ url_for('static', filename='images/img2.jpg') }}" alt="Continuous Integration" class="use-image">
+            </div>
+
+            <div class="use-item">
+                <h2>2. Continuous Delivery (CD)</h2>
+                <p>
+                    Jenkins facilitates continuous delivery by automating the deployment process. It ensures that code changes are automatically built, tested, and deployed to staging or production environments, enabling faster and more reliable releases.
+                </p>
+                <img src="{{ url_for('static', filename='images/img3.jpg') }}" alt="Continuous Delivery" class="use-image">
+            </div>
+
+            <div class="use-item">
+                <h2>3. Automated Testing</h2>
+                <p>
+                    Jenkins integrates with various testing frameworks to run automated tests on code changes. This helps in identifying bugs and ensuring that code meets quality standards before it’s merged or deployed.
+                </p>
+                <img src="{{ url_for('static', filename='images/img4.jpg') }}" alt="Automated Testing" class="use-image">
+            </div>
+
+            <div class="use-item">
+                <h2>4. Build Automation</h2>
+                <p>
+                    Jenkins automates the build process, including compiling code, packaging binaries, and creating artifacts. This reduces manual effort and ensures consistency in builds.
+                </p>
+                <img src="{{ url_for('static', filename='images/img5.jpg') }}" alt="Build Automation" class="use-image">
+
+            </div>
+
+            <div class="use-item">
+                <h2>5. Code Quality Analysis</h2>
+                <p>
+                    Jenkins integrates with tools like SonarQube to perform static code analysis and measure code quality. This helps in maintaining code standards and improving the overall codebase.
+                </p>
+                <img src="{{ url_for('static', filename='images/img6.jpg') }}" alt="Code Quality Analysis" class="use-image">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

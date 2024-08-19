@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jenkins Architecture</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="side-nav">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('jenkins_working') }}">How Does It Work?</a></li>
+                <li><a href="{{ url_for('jenkins_uses') }}">Uses of Jenkins</a></li>
+                <li><a href="{{ url_for('jenkins_architecture') }}">Jenkins Architecture</a></li>
+                <li><a href="{{ url_for('jenkins_pipeline') }}">Pipeline Working</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <div class="breadcrumbs">
+                <a href="{{ url_for('home') }}">Home</a> &gt; <a href="{{ url_for('jenkins_architecture') }}">Jenkins Architecture</a>
+            </div>
+            <div class="container">
+                <div class="section-container">
+                    <h1>Jenkins Architecture</h1>
+                    <p>Jenkins is a versatile automation server that follows a master-agent architecture to provide scalable continuous integration and delivery solutions. Here's a detailed overview of its architecture components:</p>
+                    
+                    <div class="architecture">
+                        <div class="architecture-item master-node">
+                            <h2>Master Node</h2>
+                            <p>The Jenkins Master Node is the central controller responsible for managing the Jenkins environment. It schedules jobs, monitors agent nodes, and provides the web interface for users to interact with Jenkins.</p>
+                        </div>
+                        
+                        <div class="architecture-item permanent-agents">
+                            <h2>Permanent Agents</h2>
+                            <p>Permanent Agents are dedicated machines that connect to the Jenkins Master and stay online to execute build jobs. They are often used for long-running or resource-intensive tasks and provide consistent build environments.</p>
+                        </div>
+                        
+                        <div class="architecture-item cloud-agents">
+                            <h2>Cloud Agents</h2>
+                            <p>Cloud Agents are dynamically provisioned on cloud platforms like AWS, Azure, or Google Cloud. They are created on-demand to handle build jobs and are terminated after use. This approach allows Jenkins to scale resources efficiently and handle large workloads.</p>
+                        </div>
+                        
+                        <div class="architecture-item plugins">
+                            <h2>Plugins</h2>
+                            <p>Plugins extend Jenkins' functionality by integrating with various tools and services. They add capabilities like source code management, build tools, and deployment options, allowing Jenkins to be tailored to different workflows.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-steps">
+                        <h2>How Jenkins Architecture Supports CI/CD</h2>
+                        <div class="step">
+                            <h3>1. Code Commit</h3>
+                            <p>Developers commit code changes to a version control system. Jenkins monitors these changes and triggers the build process automatically.</p>
+                        </div>
+                        <div class="step">
+                            <h3>2. Build Execution</h3>
+                            <p>The Jenkins Master schedules build jobs to be executed on available Agent Nodes. This can include Permanent Agents or dynamically provisioned Cloud Agents.</p>
+                        </div>
+                        <div class="step">
+                            <h3>3. Continuous Deployment</h3>
+                            <p>Upon successful builds and tests, Jenkins can deploy the application to staging or production environments, ensuring continuous integration and delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

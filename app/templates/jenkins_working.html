@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}How Does Jenkins Work?{% endblock %}
+
+{% block breadcrumbs %}
+    <a href="{{ url_for('home') }}">Home</a> &gt; 
+    <a href="{{ url_for('jenkins_working') }}">How Does It Work?</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>How Jenkins Works</h1>
+        <p>
+            Jenkins is an open-source automation server used to automate various stages of software development, including building, testing, and deploying code. It is widely used for continuous integration and continuous delivery (CI/CD) pipelines.
+        </p>
+
+        <h2>Basic Concepts</h2>
+        <div class="basic-concepts">
+            <div class="concept">
+                <h3>Pipeline</h3>
+                <p>A sequence of automated processes that code goes through, including building, testing, and deploying. Jenkins pipelines define these stages in a script or configuration file.</p>
+            </div>
+            <div class="concept">
+                <h3>Job</h3>
+                <p>A single task or step in the pipeline, such as compiling code or running tests. Jobs can be configured and scheduled to run automatically.</p>
+            </div>
+            <div class="concept">
+                <h3>Build</h3>
+                <p>The process of compiling code and creating executable files or packages. Jenkins can manage and trigger builds automatically based on code changes.</p>
+            </div>
+            <div class="concept">
+                <h3>Slave/Agent</h3>
+                <p>A machine that runs jobs for Jenkins. Jenkins uses master-slave architecture to distribute the workload across multiple machines.</p>
+            </div>
+            <div class="concept">
+                <h3>Plugin</h3>
+                <p>Jenkins plugins extend its functionality, allowing integration with other tools, additional features, and customizations.</p>
+            </div>
+        </div>
+
+        <h2>How Jenkins Works</h2>
+        <p>
+            Jenkins follows a master-slave architecture where:
+        </p>
+        <div class="architecture">
+            <div class="architecture-item">
+                <h3>Master</h3>
+                <p>The central server that manages the Jenkins environment, schedules jobs, and monitors the execution of tasks. It also handles the management of build configurations and user interfaces.</p>
+            </div>
+            <div class="architecture-item">
+                <h3>Slaves</h3>
+                <p>Additional servers that execute jobs and build processes. Slaves can be configured to handle specific tasks and scale Jenkins capabilities.</p>
+            </div>
+        </div>
+
+        <p>
+            Here’s a simplified view of the Jenkins process:
+        </p>
+        <img src="{{ url_for('static', filename='images/img1.jpg') }}" alt="Jenkins Architecture" class="architecture-img">
+
+
+
+        <h3>Step-by-Step Process:</h3>
+        <div class="process-steps">
+            <div class="step">
+                <h3>1. Source Code Management</h3>
+                <p>Jenkins monitors a source code repository (like Git) for changes. When a change is detected, Jenkins triggers the pipeline or job.</p>
+            </div>
+            <div class="step">
+                <h3>2. Build</h3>
+                <p>Jenkins executes the build process, compiling the code and creating artifacts.</p>
+            </div>
+            <div class="step">
+                <h3>3. Test</h3>
+                <p>Jenkins runs automated tests to ensure the code changes do not introduce errors or break existing functionality.</p>
+            </div>
+            <div class="step">
+                <h3>4. Deploy</h3>
+                <p>If the build and tests are successful, Jenkins deploys the code to a staging or production environment.</p>
+            </div>
+            <div class="step">
+                <h3>5. Notify</h3>
+                <p>Jenkins can send notifications about the build status or any issues encountered during the process.</p>
+            </div>
+        </div>
+
+        <p>
+            Jenkins provides a flexible and scalable approach to automating software development processes, making it easier to deliver high-quality software rapidly.
+        </p>
+    </div>
+{% endblock %}

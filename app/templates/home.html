@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<a href="{{ url_for('home') }}">Home</a> / Jenkins Basics
+{% endblock %}
+{% block content %}
+<div class="home-container">
+    <h1>Introduction to Jenkins Basics</h1>
+    <p>Jenkins is a popular open-source automation server that is used to automate various tasks in software development, such as building, testing, and deploying code. Below are some key points about Jenkins:</p>
+    <img src="{{ url_for('static', filename='images/img_home.png') }}" alt="Build Automation" class="use-image">
+
+    <ul class="jenkins-basics">
+        <li><h3>Open Source:</h3> Jenkins is free and open-source, supported by a large community of users and contributors.</li>
+        <li><h3>Automation:</h3> It helps in automating repetitive tasks in the software development process, facilitating continuous integration and continuous delivery (CI/CD).</li>
+        <li><h3>Extensibility:</h3> Jenkins supports hundreds of plugins that allow it to integrate with various tools and services, extending its functionality.</li>
+        <li><h3>Cross-Platform:</h3> Jenkins can run on different platforms like Windows, macOS, and Linux.</li>
+        <li><h3>Master-Agent Architecture:</h3> Jenkins has a distributed architecture, allowing you to scale your automation by using multiple agents to perform tasks in parallel.</li>
+        <li><h3>Pipeline Support:</h3> Jenkins provides robust support for defining and managing CI/CD pipelines through a simple, declarative syntax.</li>
+        <li><h3>Active Community:</h3> With an active and large community, Jenkins is continuously updated with new features and improvements.</li>
+    </ul>
+
+    <p>This article provides a foundation for understanding Jenkins. For more in-depth topics, navigate to other sections like Jenkins architecture, pipeline working, and more.</p>
+    
+</div>
+{% endblock %}
