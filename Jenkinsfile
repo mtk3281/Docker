@@ -23,12 +23,12 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scmGit(
-                    branches: [[name: '*/main']],
-                    browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'),
-                    extensions: [],
-                    userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']]
-                )
+               checkout([$class: 'GitSCM',
+                userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']],
+                branches: [[name: '*/main']],
+                extensions: []
+            ])
+
             }
         }
 
