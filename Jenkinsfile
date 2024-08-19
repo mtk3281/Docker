@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Starting Git clone...'
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtk3281/flask-web-app--jenkins'
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'), extensions: [], gitTool: 'Git in Docker', userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']])
             }
         }
 
