@@ -41,6 +41,7 @@ class FlaskAppTests(unittest.TestCase):
         response = self.client.get('/nonexistent')
         self.assertEqual(response.status_code, 404)
 
+#main 
 if __name__ == '__main__':
     unittest.main()
 
