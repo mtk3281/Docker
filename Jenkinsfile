@@ -8,13 +8,13 @@ pipeline {
 
     environment {
             FLASK_APP = 'app.py'
-            GIT_EXECUTABLE = '/usr/bin/git' // Adjust this path based on your Docker container's Git path
+            GIT_EXECUTABLE = '/usr/bin/git'
         }
     stages {
         stage('Checkout') {
             steps {
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], gitTool: 'Git in Docker', userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']])
-            }
+               checkout scmGit(branches: [[name: '*/main']], browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'), extensions: [], gitTool: 'Git in Docker', userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']])
+                }
         }
 
         stage('Install Dependencies') {
