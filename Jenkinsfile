@@ -1,13 +1,19 @@
 pipeline {
     agent {
-        label 'docker_agent_python'
+        label 'python'
     }
     tools {
-        git 'Git in Windows'  // Ensure this name matches the configuration in Jenkins
+        git 'Docker' 
     }
 
     environment {
         FLASK_APP = 'app.py'
+    }
+    stage('Test Git') {
+        steps {
+            sh 'which git'
+            sh 'git --version'
+        }
     }
 
     stages {
