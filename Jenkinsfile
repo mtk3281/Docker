@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo ' Verifying Git installation...'
                 script {
-                    // Verify that Git is installed and check its path
+      
                     sh 'if [ -x "/usr/bin/git" ]; then echo "Git is installed at /usr/bin/git"; else echo "Git is not installed"; exit 1; fi'
                 }
             }
