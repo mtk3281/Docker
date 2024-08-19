@@ -163,7 +163,7 @@ ENV PATH="/venv/bin:$PATH"
 USER jenkins
 ```
 
-### Jenkins Pipeline
+### Jenkins Pipeline code
 
 The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testing, and deploying the Flask application. Below is the pipeline configuration:
 
@@ -255,10 +255,10 @@ The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testi
       
         a. Set the GitHub Repository:
 
-        ``` sh
-              https://github.com/mtk3281/flask-web-app--jenkins/
+  ``` bash
+        https://github.com/mtk3281/flask-web-app--jenkins/
 
-        ```
+  ```
 
         b. Set Poll SCM:
 
