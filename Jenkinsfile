@@ -3,7 +3,7 @@ pipeline {
         label 'docker_agent_python'
     }
     tools {
-        git 'Git in Docker'  // Ensure this name matches the configuration in Jenkins
+        git 'Git in Windows'  // Ensure this name matches the configuration in Jenkins
     }
 
     environment {
@@ -27,7 +27,6 @@ pipeline {
                     branches: [[name: '*/main']],
                     browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'),
                     extensions: [],
-                    gitTool: 'Git in Docker',
                     userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']]
                 )
             }
