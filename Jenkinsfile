@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'python'
+        label 'docker_python_flask'
     }
     tools {
         git 'Docker' 
