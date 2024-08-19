@@ -10,10 +10,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'git cloning started '
-               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/mtk3281/flask-web-app--jenkins'
-                
-            }
+                    echo 'Git Checkout'
+                      git url: 'https://github.com/mtk3281/flask-web-app--jenkins.git', branch: 'main'
+                  }
         }
 
         stage('Install Dependencies') {
@@ -49,6 +48,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the Flask app...'
+                // Add deployment commands here
+                // e.g., copy files, deploy to a server, etc.
             }
         }
     }
@@ -56,7 +57,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up workspace...'
-            deleteDir() 
+            deleteDir() // Clean up the workspace after the build
         }
 
         success {
