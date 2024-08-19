@@ -253,26 +253,25 @@ The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testi
 
   - **Configure the Job**::
       
-a. Set the GitHub Repository:
+    a. Set the GitHub Repository:
+
+        https://github.com/mtk3281/flask-web-app--jenkins/
 
 
-https://github.com/mtk3281/flask-web-app--jenkins/
+    b. Set Poll SCM:
+
+        Define the polling schedule for changes:
+
+        Example: * * * * * (for every minute)
+        Example: */3 * * * * (for every 3 minutes)
 
 
-b. Set Poll SCM:
+    c. Define Project Pipeline Structure:
 
-Define the polling schedule for changes:
+        Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
+        Automatic Builds:
 
-Example: * * * * * (for every minute)
-Example: */3 * * * * (for every 3 minutes)
-
-
-c. Define Project Pipeline Structure:
-
-Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
-Automatic Builds:
-
-When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
+        When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
 
 
 ### Project Roadmap
