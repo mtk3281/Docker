@@ -129,63 +129,157 @@ Ensure you have the following dependencies installed on your system:
 
 - **Docker**: Required to build and run the Docker container.
 - **Python**: Ensure Python is installed on your machine.
+- **Jenkins**: Install and set up jenkins.
 
 
-## Installation
+ ## Docker Image
 
-1. **Clone the flask-web-app--jenkins repository:**
+The Docker image used for the Jenkins pipeline is based on the `jenkins/agent:alpine-jdk11` image and includes Python and Flask. The Docker image can be pulled from DockerHub:
 
-    ```sh
-    git clone https://github.com/mtk3281/flask-web-app--jenkins
-    ```
-
-2. **Change to the project directory:**
-
-    ```sh
-    cd flask-web-app--jenkins
-    ```
-
-3. **Install the dependencies:**
-
-    Create a virtual environment and install the required Python packages:
-
-    ```sh
-
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    pip install -r requirements.txt
-    ```
-
-
-
-### Running flask-web-app--jenkins
-
-Use the following command to run the Flask web app:
-
-```sh
-docker build -t jenkins-flask-app .
-docker run -p 5000:5000 jenkins-flask-app
+```bash
+docker pull mtk3281/docker-python-flask:latest
 ```
 
-This will build the Docker image and run the Flask application, making it accessible at http://127.0.0.1:5000.
 
-### Tests
+### Dockerfile code
 
-To execute tests, run:
+The Dockerfile for creating the Docker image is as follows:
+
+```dockerfile
+FROM jenkins/agent:alpine-jdk11
+
+USER root
+
+# Install Python 3 and virtualenv
+RUN apk add --no-cache python3 py3-pip python3-dev \
+    && python3 -m venv /venv \
+    && . /venv/bin/activate \
+    && pip install --upgrade pip \
+    && pip install Flask
+
+# Set environment variables to use the virtual environment
+ENV PATH="/venv/bin:$PATH"
+
+USER jenkins
+```
+
+### Jenkins Pipeline
+
+The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testing, and deploying the Flask application. Below is the pipeline configuration:
 
 ``` sh
-python -m unittest discover -s app/test
+
+      pipeline {
+          agent {
+              label 'docker_agent_python'
+          }
+
+          environment {
+              FLASK_APP = 'app.py'
+          }
+
+          stages {
+              stage('Checkout') {
+                  steps {
+                      // Checkout code from GitHub
+                      git url: 'https://github.com/your-username/your-repository.git', branch: 'main'
+                  }
+              }
+
+              stage('Install Dependencies') {
+                  steps {
+                      echo 'Installing dependencies...'
+                      sh 'pip install -r requirements.txt'
+                  }
+              }
+
+              stage('Run Flask App') {
+                  steps {
+                      echo 'Starting the Flask app...'
+                      sh 'nohup python $FLASK_APP > app.log 2>&1 &'
+                      sleep time: 10, unit: 'SECONDS'
+                  }
+              }
+
+              stage('Test Flask App') {
+                  steps {
+                      echo 'Running tests...'
+                      sh 'curl -s http://localhost:5000 || exit 1'
+                      sh 'python -m unittest discover -s tests'
+                  }
+              }
+
+              stage('Clean Up') {
+                  steps {
+                      echo 'Stopping the Flask app...'
+                      sh 'pkill -f "python $FLASK_APP" || true'
+                  }
+              }
+
+              stage('Deploy') {
+                  steps {
+                      echo 'Deploying the Flask app...'
+                      // Add deployment commands here
+                      // e.g., copy files, deploy to a server, etc.
+                  }
+              }
+          }
+
+          post {
+              always {
+                  echo 'Cleaning up workspace...'
+                  deleteDir() // Clean up the workspace after the build
+              }
+
+              success {
+                  echo 'Build succeeded!'
+              }
+
+              failure {
+                  echo 'Build failed!'
+              }
+          }
+      }
+
 ```
 
----
+### Installation
 
-Project Roadmap
+  Set up Jenkins:
 
-- ** Build the basic Flask web app structure **
-- ** Implement Jenkins tutorials and explanations **
-- ** Containerize the application using Docker **
-- ** Expand content to cover advanced Jenkins topics **
-- ** Add more detailed testing and CI/CD examples **
+  Create a New Job in Jenkins:
+
+  Choose "Pipeline" for the job type.
+
+  Configure the Job:
+      
+        a. Set the GitHub Repository:
+
+        ``` sh
+              https://github.com/mtk3281/flask-web-app--jenkins/
+
+        ```
+
+        b. Set Poll SCM:
+
+              Define the polling schedule for changes:
+
+                  Example: * * * * * (for every minute)
+                  Example: 5/ * * * * (for every 5 minutes)
 
 
----
+        c. Define Project Pipeline Structure:
+
+            Configure the pipeline structure according to the Jenkinsfile provided and apply the changes.
+            Automatic Builds:
+
+            When changes are made in GitHub, Jenkins will automatically detect these changes, start building, testing, and deploying the code.
+
+
+### Project Roadmap
+
+* Build the Basic Flask Web App Structure
+* Implement Jenkins Tutorials and Explanations
+* Containerize the Application Using Docker
+* Expand Content to Cover Advanced Jenkins Topics
+* Add More Detailed Testing and CI/CD Examples
