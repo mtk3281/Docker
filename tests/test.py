@@ -20,22 +20,22 @@ class FlaskAppTests(unittest.TestCase):
     def test_jenkins_working_page(self):
         response = self.client.get('/jenkins_working')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'How Jenkins Works', response.data)  # Update to match actual content
+        self.assertIn(b'How Jenkins Works', response.data) 
 
     def test_jenkins_uses_page(self):
         response = self.client.get('/jenkins_uses')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Uses of Jenkins', response.data)  # Update to match actual content
+        self.assertIn(b'Uses of Jenkins', response.data) 
 
     def test_jenkins_architecture_page(self):
         response = self.client.get('/jenkins_architecture')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Jenkins Architecture', response.data)  # Update to match actual content
+        self.assertIn(b'Jenkins Architecture', response.data)
 
     def test_jenkins_pipeline_page(self):
         response = self.client.get('/jenkins_pipeline')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Jenkins Pipeline', response.data)  # Update to match actual content
+        self.assertIn(b'Jenkins Pipeline', response.data)
 
     def test_non_existing_page(self):
         response = self.client.get('/nonexistent')
