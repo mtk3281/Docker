@@ -31,9 +31,10 @@
 - [Repository Structure](#repository-structure)
 - [Modules](#modules)
 - [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Running the Application](#running-the-application)
-  - [Testing](#testing)
+  - [Prerequisites](#prerequisites)
+  - [Docker Image](#docker-image)
+  - [Jenkins Pipeline structure](#jenkins-pipeline-structure)
+- [Installation](#installation)
 - [Project Roadmap](#project-roadmap)
 
 ---
@@ -123,125 +124,89 @@ This project is a Flask-based web application that provides a comprehensive intr
 
 ## Getting Started
 
-### Prerequisites
+  ### Prerequisites
 
-Ensure you have the following dependencies installed on your system:
+  Ensure you have the following dependencies installed on your system:
 
-- **Docker**: Required to build and run the Docker container.
-- **Python**: Ensure Python is installed on your machine.
-- **Jenkins**: Install and set up jenkins.
-
-
- ## Docker Image
-
-The Docker image used for the Jenkins pipeline is based on the `jenkins/agent:alpine-jdk11` image and includes Python and Flask. The Docker image can be pulled from DockerHub:
-
-```bash
-docker pull mtk3281/docker-python-flask:latest
-```
+  - **Docker**: Required to build and run the Docker container.
+  - **Python**: Ensure Python is installed on your machine.
+  - **Jenkins**: Install and set up jenkins.
 
 
-### Dockerfile code
+  ## Docker Image
 
-The Dockerfile for creating the Docker image is as follows:
+  The Docker image used for the Jenkins pipeline is based on the `jenkins/agent:alpine-jdk11` image and includes Python and Flask. The Docker image can be pulled from DockerHub:
 
-```dockerfile
-FROM jenkins/agent:alpine-jdk11
+  ```bash
+  docker pull mtk3281/docker-python-flask:latest
+  ```
 
-USER root
 
-# Install Python 3 and virtualenv
-RUN apk add --no-cache python3 py3-pip python3-dev \
-    && python3 -m venv /venv \
-    && . /venv/bin/activate \
-    && pip install --upgrade pip \
-    && pip install Flask
+  ### Dockerfile code
 
-# Set environment variables to use the virtual environment
-ENV PATH="/venv/bin:$PATH"
+  The Dockerfile for creating the Docker image is as follows:
 
-USER jenkins
-```
+  ```dockerfile
+  FROM jenkins/agent:alpine-jdk11
 
-### Jenkins Pipeline code
+  USER root
 
-The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testing, and deploying the Flask application. Below is the pipeline configuration:
+  # Install Python 3 and virtualenv
+  RUN apk add --no-cache python3 py3-pip python3-dev \
+      && python3 -m venv /venv \
+      && . /venv/bin/activate \
+      && pip install --upgrade pip \
+      && pip install Flask
 
-``` sh
+  # Set environment variables to use the virtual environment
+  ENV PATH="/venv/bin:$PATH"
 
-      pipeline {
-          agent {
-              label 'docker_agent_python'
-          }
+  USER jenkins
+  ```
 
-          environment {
-              FLASK_APP = 'app.py'
-          }
+  ### Jenkins Pipeline structure
 
-          stages {
-              stage('Checkout') {
-                  steps {
-                      // Checkout code from GitHub
-                      git url: 'https://github.com/your-username/your-repository.git', branch: 'main'
-                  }
-              }
+  The Jenkins pipeline script (Jenkinsfile) defines the stages for building, testing, and deploying the Flask application. Below is the pipeline basic structure :
 
-              stage('Install Dependencies') {
-                  steps {
-                      echo 'Installing dependencies...'
-                      sh 'pip install -r requirements.txt'
-                  }
-              }
+  ``` groovy
+pipeline {
+    agent any
+ 
+    stages {
+        stage('Build') {
+            steps {
+                sh 'echo "Building"'
+                // Add commands to build your project here
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo "Testing"'
+                // Add commands to run tests here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploying"'
+                // Add commands to deploy your application here
+            }
+        }
+    }
+ 
+    post {
+        always {
+            // Cleanup steps if needed
+        }
+        success {
+            // Actions to perform when the pipeline succeeds
+        }
+        failure {
+            // Actions to perform when the pipeline fails
+        }
+    }
+}
 
-              stage('Run Flask App') {
-                  steps {
-                      echo 'Starting the Flask app...'
-                      sh 'nohup python $FLASK_APP > app.log 2>&1 &'
-                      sleep time: 10, unit: 'SECONDS'
-                  }
-              }
-
-              stage('Test Flask App') {
-                  steps {
-                      echo 'Running tests...'
-                      sh 'curl -s http://localhost:5000 || exit 1'
-                      sh 'python -m unittest discover -s tests'
-                  }
-              }
-
-              stage('Clean Up') {
-                  steps {
-                      echo 'Stopping the Flask app...'
-                      sh 'pkill -f "python $FLASK_APP" || true'
-                  }
-              }
-
-              stage('Deploy') {
-                  steps {
-                      echo 'Deploying the Flask app...'
-                      // Add deployment commands here
-                      // e.g., copy files, deploy to a server, etc.
-                  }
-              }
-          }
-
-          post {
-              always {
-                  echo 'Cleaning up workspace...'
-                  deleteDir() // Clean up the workspace after the build
-              }
-
-              success {
-                  echo 'Build succeeded!'
-              }
-
-              failure {
-                  echo 'Build failed!'
-              }
-          }
-      }
-
-```
+  ```
 
 ## Installation
 
