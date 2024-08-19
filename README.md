@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Jenkins Basics Flask Web App
 
 This project is a Flask web application designed to explain the basics of Jenkins, including its working, uses, architecture, and pipelines. It also includes a Dockerfile for building a Docker image that can be used as a Docker cloud agent (slave) for building projects.
@@ -84,9 +83,4 @@ To run the unit tests:
 ```bash
 python -m unittest discover -s app/test
 
-=======
-# Jenkins 
 
-
-tutorial for the working of the jenkins
->>>>>>> a5c820cb38cc0fe176b5ecfe83df2ba1e017a8c4
