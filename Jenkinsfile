@@ -3,27 +3,33 @@ pipeline {
         label 'docker_agent_python'
     }
     tools {
-        git 'Git in Docker'
+        git 'Git in Docker'  // Ensure this name matches the configuration in Jenkins
     }
 
     environment {
         FLASK_APP = 'app.py'
-        GIT_EXECUTABLE = '/usr/bin/git'
     }
 
     stages {
         stage('Verify Git Installation') {
             steps {
+                echo ' Verifying Git installation...'
                 script {
                     // Verify that Git is installed and check its path
-                    sh 'if [ -x "$GIT_EXECUTABLE" ]; then echo "Git is installed at $GIT_EXECUTABLE"; else echo "Git is not installed"; exit 1; fi'
+                    sh 'if [ -x "/usr/bin/git" ]; then echo "Git is installed at /usr/bin/git"; else echo "Git is not installed"; exit 1; fi'
                 }
             }
         }
 
         stage('Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'), extensions: [], gitTool: 'Git in Docker', userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']])
+                checkout scmGit(
+                    branches: [[name: '*/main']],
+                    browser: github('https://github.com/mtk3281/flask-web-app--jenkins.git'),
+                    extensions: [],
+                    gitTool: 'Git in Docker',
+                    userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins.git']]
+                )
             }
         }
 
