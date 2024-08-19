@@ -5,10 +5,11 @@ pipeline {
     tools {
             git 'Git in Docker'
         }
-    environment {
-        FLASK_APP = 'app.py'
-    }
 
+    environment {
+            FLASK_APP = 'app.py'
+            GIT_EXECUTABLE = '/usr/bin/git' // Adjust this path based on your Docker container's Git path
+        }
     stages {
         stage('Checkout') {
             steps {
