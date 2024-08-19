@@ -2,7 +2,9 @@ pipeline {
     agent {
         label 'docker_agent_python'
     }
-
+    tools {
+            git 'Git in Docker'
+        }
     environment {
         FLASK_APP = 'app.py'
     }
@@ -12,7 +14,8 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                           branches: [[name: 'main']], 
-                          userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']]
+                          userRemoteConfigs: [[url: 'https://github.com/mtk3281/flask-web-app--jenkins']],
+                          gitTool: 'Git for Docker'
                 ])
             }
         }
