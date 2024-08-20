@@ -7,17 +7,6 @@ pipeline {
         FLASK_APP = 'app.py'
     }
 
-    stages {
-        stage('Verify Git Installation') {
-            steps {
-                echo ' Verifying Git installation...'
-                script {
-      
-                    sh 'if [ -x "/usr/bin/git" ]; then echo "Git is installed at /usr/bin/git"; else echo "Git is not installed"; exit 1; fi'
-                }
-            }
-        }
-
         stage('Checkout') {
             steps {
                checkout([$class: 'GitSCM',
@@ -64,7 +53,6 @@ pipeline {
                 echo 'Deploying the Flask app...'
             }
         }
-    }
 
     post {
         always {
