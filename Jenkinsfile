@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'docker_python_flask'
+        label 'docker_python'
     }
 
     environment {
