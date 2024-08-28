@@ -1,6 +1,7 @@
 pipeline {
     agent {
         label 'docker_python'
+        
     }
 
     environment {
